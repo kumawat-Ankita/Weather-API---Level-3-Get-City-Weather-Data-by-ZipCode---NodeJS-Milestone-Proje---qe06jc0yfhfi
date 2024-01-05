@@ -37,6 +37,22 @@ const weatherController = require('../controllers/weatherController');
 // Level 3: Get City Weather Data by ZipCode
 router.get('/city/zipcode/:code', async (req, res) => {
    // TODO: Implement this function
+  const { code } = req.params;
+  const cityWeather = weatherController.getWeatherDataByZipCode(code);
+
+  if (cityWeather) {
+    res.status(200).json({
+      status: 'success',
+      message: 'Weather data retrieved',
+      data: cityWeather,
+    });
+  } else {
+    res.status(404).json({
+      status: 'error',
+      message: 'Failed to retrieve weather data',
+      error: 'ZipCode not found',
+    });
+  }
 });
 
 module.exports = router;
